@@ -1,6 +1,6 @@
 import QuickChart from 'quickchart-js'
 
-export const generateChart = ( dataSaved, type ) => {
+export const generateChart = ( dataSaved, types ) => {
   const chart = new QuickChart();
 
   chart.setWidth(500)
@@ -10,7 +10,7 @@ export const generateChart = ( dataSaved, type ) => {
     type: 'line',
     data: {
       labels: dataSaved.dates,
-      datasets: [
+      datasets: types.map(type => (
         {
           label: type,
           display: false,
@@ -19,7 +19,7 @@ export const generateChart = ( dataSaved, type ) => {
           borderColor: 'rgb(255, 99, 132)',
           fill: true,
         },
-      ],
+      )),
     },
     options: {
       responsive: true,
