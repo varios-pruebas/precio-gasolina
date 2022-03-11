@@ -10,6 +10,7 @@ env:
   DIESEL_CHAT_ID: ${{ secrets.DIESEL_CHAT_ID }}
   TOKEN_TELEGRAM: ${{ secrets.TOKEN_TELEGRAM }}
   FUEL_STATION_ID: 12658
+  FUEL_STATION_ID_2: 14386
 
 jobs:
   downloadStatus:
