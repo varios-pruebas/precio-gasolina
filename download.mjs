@@ -8,8 +8,8 @@ const GEOPORTAL_URL_2 = `https://geoportalgasolineras.es/rest/${FUEL_STATION_ID_
 
 const date = new Intl.DateTimeFormat('es-ES', { month: 'numeric', day: 'numeric' }).format(Date.now())
 
-const download = (type) => {
-    fetch(GEOPORTAL_URL, {headers: { 'Accept': ' application/json' }})
+const download = (type, url) => {
+    fetch(url, {headers: { 'Accept': ' application/json' }})
     .then(res => res.json())
     .then((stationData) => {
         let dataSaved = readFile()
@@ -32,5 +32,5 @@ const download = (type) => {
       })
 }
 
-download('luna')
-download('institutos')
+download('luna', GEOPORTAL_URL)
+download('institutos', GEOPORTAL_URL_2)

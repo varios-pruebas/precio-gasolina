@@ -2,6 +2,8 @@ import QuickChart from 'quickchart-js'
 
 export const generateChart = ( dataSaved, types ) => {
   const chart = new QuickChart();
+  const min = Math.trunc(Math.min(...[...dataSaved.luna, ...dataSaved.institutos]) * 100) / 100
+  const max = Math.max(...[...dataSaved.luna, ...dataSaved.institutos])
 
   chart.setWidth(500)
   chart.setHeight(300);
@@ -10,34 +12,30 @@ export const generateChart = ( dataSaved, types ) => {
     type: 'line',
     data: {
       labels: dataSaved.dates,
-      datasets: types.map(type => (
-        {
+      datasets: types.map(type => ({
           label: type,
           display: false,
-          steppedLine: true,
           data: dataSaved[type],
-          borderColor: 'rgb(255, 99, 132)',
           fill: true,
-        },
-      )),
+        }),
+      ),
+
     },
     options: {
       responsive: true,
       scales: {
-        yAxes: [
-            {
-              ticks: {
-                min: Math.trunc(Math.min(...dataSaved[type]) * 100) / 100,
-                max: Math.max(...dataSaved[type]),
-                callback: (val) => {
-                  return val.toLocaleString() + '€';
-                },
-              },
+        yAxes: [{
+          ticks: {
+              min,
+              max,
             },
-        ],
-    }
+          }],
+      }
     },
   });
+
+
+  console.log('graph: ', chart.getUrl())
 
   return chart.getUrl()
 }
