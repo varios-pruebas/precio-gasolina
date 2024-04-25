@@ -3,7 +3,7 @@ name: Descarga precio de hoy
 on:
   workflow_dispatch:
   schedule:
-    - cron: 10,40 6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21 * * *
+    - cron: 40 8 * * *
 
 env:
   GASOLINA_CHAT_ID: ${{ secrets.GASOLINA_CHAT_ID }}
@@ -24,10 +24,11 @@ jobs:
         node-version: 16.x
     - run: npm install
     - run: npm run download-today
-    - uses: stefanzweifel/git-auto-commit-action@v4
+    - name: Add prices
+      id: auto-commit-action
+      uses: stefanzweifel/git-auto-commit-action@v4
       with:
-        commit_message: Add report for today
-        file_pattern: 'data.json'
-    - name: "Run if changes have been detected"
+        commit_message: 'Add report for today'
+    - name: "Send to telegram if changes have been detected"
       if: steps.auto-commit-action.outputs.changes_detected == 'true'
       run: npm run send
